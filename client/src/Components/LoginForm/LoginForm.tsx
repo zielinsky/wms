@@ -1,16 +1,15 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { TEInput, TERipple } from "tw-elements-react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { auth } from "../../firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { useAuth } from "../../AuthContext"
+
+type Inputs = {
+  email: string;
+  password: string;
+};
 
 export default function LoginForm(): JSX.Element {
-  const navigate = useNavigate();
-  type Inputs = {
-    email: string;
-    password: string;
-  };
+  const auth = useAuth();
   const {
     register,
     handleSubmit,
@@ -19,13 +18,7 @@ export default function LoginForm(): JSX.Element {
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
-    signInWithEmailAndPassword(auth, data.email, data.password).then(
-      (_) => {
-        console.log(auth.currentUser);
-        navigate("/home");
-      },
-      (reason) => console.log(reason)
-    );
+    auth.login(data.email, data.password)
   };
 
   // console.log(watch("email")) // watch input value by passing the name of it
@@ -92,13 +85,6 @@ export default function LoginForm(): JSX.Element {
                   Sign in
                 </button>
               </TERipple>
-
-              {/* <!-- Divider --> */}
-              <div className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
-                <p className="mx-4 mb-0 text-center font-semibold dark:text-neutral-200">
-                  OR
-                </p>
-              </div>
             </form>
           </div>
         </div>
