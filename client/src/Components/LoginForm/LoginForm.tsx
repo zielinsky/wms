@@ -1,7 +1,7 @@
 import React from "react";
 import { TEInput, TERipple } from "tw-elements-react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useAuth } from "../../AuthContext"
+import { useAuth } from "../../Contexts/AuthContext"
 
 type Inputs = {
   email: string;

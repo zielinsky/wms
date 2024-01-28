@@ -11,7 +11,13 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "login", element: <LoginPage /> },
-      { path: "", element: <PrivateRoute component= {<HomePage />}/>}
+      { path: "", element: <PrivateRoute component= {<HomePage />}/>,
+    children: [
+      { path: "users" },
+      { path: "warehouses" },
+      { path: "admin" },
+      { path: "logs" },
+    ]}
     ],
   },
 ]);
