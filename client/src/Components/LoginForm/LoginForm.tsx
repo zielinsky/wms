@@ -1,10 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { TEInput, TERipple } from "tw-elements-react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { auth } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function LoginForm(): JSX.Element {
+  const navigate = useNavigate();
   type Inputs = {
     email: string;
     password: string;
@@ -18,7 +20,10 @@ export default function LoginForm(): JSX.Element {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
     signInWithEmailAndPassword(auth, data.email, data.password).then(
-      (userCreds) => console.log(auth.currentUser),
+      (_) => {
+        console.log(auth.currentUser);
+        navigate("/home");
+      },
       (reason) => console.log(reason)
     );
   };
