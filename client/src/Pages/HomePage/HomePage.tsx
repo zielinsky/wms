@@ -71,9 +71,9 @@ const HomePage: React.FC = () => {
           Warehouse Management System
         </Header>
       <Layout>
-        <Sider theme="light" collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+        <Sider style={{borderRadius:"0px 8px 0px"}}theme="light" collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
           <div className="justify-between flex h-full flex-col pb-3 pt-20">
-            <Menu style={{borderInlineEnd: 0}}theme="light" defaultSelectedKeys={['wms']} mode="inline" items={items} onSelect={onSelectMenu}/>
+            <Menu style={{borderInlineEnd: 0, borderRadius: 8}}theme="light" defaultSelectedKeys={['wms']} mode="inline" items={items} onSelect={onSelectMenu}/>
             <Button type='text' size='large' onClick={auth.logout} >
               <LogoutOutlined style={{fontSize: 20}} />
             </Button>
