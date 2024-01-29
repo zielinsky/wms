@@ -13,10 +13,10 @@ const router = createBrowserRouter([
       { path: "login", element: <LoginPage /> },
       { path: "", element: <PrivateRoute component= {<HomePage />}/>,
     children: [
-      { path: "users" },
-      { path: "warehouses" },
-      { path: "admin" },
-      { path: "logs" },
+      { path: "", element: <div>Warehouses</div> },
+      { path: "users", element: <div>Users</div> },
+      { path: "admin", element: <div>Admin</div> },
+      { path: "logs", element: <div>Logs</div> },
     ]}
     ],
   },

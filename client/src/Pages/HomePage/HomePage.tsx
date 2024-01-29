@@ -11,6 +11,8 @@ import {
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme, Button } from 'antd';
 import { useAuth } from '../../Contexts/AuthContext';
+import { Outlet, useNavigate } from 'react-router';
+import { SelectEventHandler } from 'rc-menu/lib/interface';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -41,27 +43,42 @@ const items: MenuItem[] = [
   getItem('Admin', 'admin', <UserOutlined />),
 ];
 
+const keyToPathMap : {[key: string] : string}= {
+  'wms': "",
+  'users': "/users",
+  'logsPut': "/logs?filter=put",
+  'logsTake': "/logs?filter=take",
+  'logsAll': "/logs?filter=all",
+  'admin': '/admin',
+}
+
+
 const HomePage: React.FC = () => {
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   const auth = useAuth()
 
+  const onSelectMenu : SelectEventHandler= ({key, ...rest}) => {
+    navigate(keyToPathMap[key])
+  }
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider theme="light" collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-        <div className="justify-between flex h-full flex-col pb-3 pt-20">
-          <Menu style={{borderInlineEnd: 0}}theme="light" defaultSelectedKeys={['1']} mode="inline" items={items} />
-          <Button type='text' size='large' onClick={auth.logout} >
-            <LogoutOutlined style={{fontSize: 20}} />
-          </Button>
-        </div>
-      </Sider>
-      <Layout>
-        <Header style={{background: colorBgContainer, fontSize: 30, textAlign: 'left' }}>
+      <Header style={{background: colorBgContainer, fontSize: 30, borderRadius: 8, margin: "10px 20px 20px 20px" }}>
           Warehouse Management System
         </Header>
+      <Layout>
+        <Sider theme="light" collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+          <div className="justify-between flex h-full flex-col pb-3 pt-20">
+            <Menu style={{borderInlineEnd: 0}}theme="light" defaultSelectedKeys={['wms']} mode="inline" items={items} onSelect={onSelectMenu}/>
+            <Button type='text' size='large' onClick={auth.logout} >
+              <LogoutOutlined style={{fontSize: 20}} />
+            </Button>
+          </div>
+        </Sider>
         <Content style={{ margin: '0 16px' }}>
           <div
             style={{
@@ -71,13 +88,13 @@ const HomePage: React.FC = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            Bill is a cat.
+            <Outlet />
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>
-          Weppo @ {new Date().getFullYear()} Created by Patryk Zieliński & Jan Buszka
-        </Footer>
       </Layout>
+        <Footer style={{ textAlign: 'center' }}>
+            Weppo @ {new Date().getFullYear()} Created by Patryk Zieliński & Jan Buszka
+        </Footer>
     </Layout>
   );
 };
