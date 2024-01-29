@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import {
   DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
   TeamOutlined,
+  InboxOutlined,
+  HistoryOutlined,
   UserOutlined,
   LogoutOutlined,
+  
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme, Button } from 'antd';
@@ -30,15 +31,14 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem('Option 1', '1', <PieChartOutlined />),
-  getItem('Option 2', '2', <DesktopOutlined />),
-  getItem('User', 'sub1', <UserOutlined />, [
-    getItem('Tom', '3'),
-    getItem('Bill', '4'),
-    getItem('Alex', '5'),
+  getItem('Warehouses', 'wms', <InboxOutlined />),
+  getItem('Users', 'users', <TeamOutlined />),
+  getItem('Logs', 'logs', <HistoryOutlined />, [
+    getItem('Put', 'logsPut'),
+    getItem('Take', 'logsTake'),
+    getItem('All', 'logsAll')
   ]),
-  getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-  getItem('Files', '9', <FileOutlined />),
+  getItem('Admin', 'admin', <UserOutlined />),
 ];
 
 const HomePage: React.FC = () => {
@@ -59,7 +59,7 @@ const HomePage: React.FC = () => {
         </div>
       </Sider>
       <Layout>
-        <Header style={{background: colorBgContainer, fontSize: 30, textAlign: 'center' }}>
+        <Header style={{background: colorBgContainer, fontSize: 30, textAlign: 'left' }}>
           Warehouse Management System
         </Header>
         <Content style={{ margin: '0 16px' }}>
