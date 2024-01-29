@@ -79,22 +79,24 @@ const HomePage: React.FC = () => {
             </Button>
           </div>
         </Sider>
-        <Content style={{ margin: '0 16px' }}>
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-            }}
-          >
-            <Outlet />
-          </div>
-        </Content>
+        <Layout>
+          <Content style={{ margin: '0 16px' }}>
+            <div
+              style={{
+                padding: 24,
+                minHeight: 360,
+                background: colorBgContainer,
+                borderRadius: borderRadiusLG,
+              }}
+            >
+              <Outlet />
+            </div>
+          </Content>
+          <Footer style={{ textAlign: 'center' }}>
+              Weppo @ {new Date().getFullYear()} Created by Patryk Zieliński & Jan Buszka
+          </Footer>
+        </Layout>
       </Layout>
-        <Footer style={{ textAlign: 'center' }}>
-            Weppo @ {new Date().getFullYear()} Created by Patryk Zieliński & Jan Buszka
-        </Footer>
     </Layout>
   );
 };
