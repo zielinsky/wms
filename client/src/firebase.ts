@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth'
+import { getAuth, setPersistence, browserLocalPersistence, onAuthStateChanged, User } from 'firebase/auth'
 import React from 'react';
 
 const firebaseConfig = {
@@ -13,5 +13,11 @@ const firebaseConfig = {
   };
 
 initializeApp(firebaseConfig)
-
+// export const _getAuth = () => getAuth() 
 export const auth = getAuth()
+// onAuthStateChanged(auth, (user: User | null) => {
+//   if (user !== null) {
+//     localStorage.setItem("is_auth", "true")
+//   }
+// })
+// setPersistence(auth, browserLocalPersistence)

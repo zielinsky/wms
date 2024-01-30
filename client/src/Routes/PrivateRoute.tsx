@@ -1,18 +1,21 @@
 import React from "react"
-import { Navigate } from "react-router-dom"
-import { useAuth } from "../Contexts/AuthContext"
+import { Navigate, useNavigate } from "react-router-dom"
+import { useAuth } from "../Hooks/useAuth"
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 
 export interface PrivateRouteProps {
   component: JSX.Element
 }
 
 const PrivateRoute : React.FC<PrivateRouteProps> = (props : PrivateRouteProps) => {
-
+  const {isSignedIn, pending, user} = useAuth()
   const auth = useAuth()
 
-  return auth.isLoggedIn ?
+  return pending ? <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+  : (isSignedIn ?
     props.component :
-    <Navigate to={{ pathname: '/login'}} />
+    <Navigate to={{ pathname: '/login'}} />)
 }
 
 export default PrivateRoute

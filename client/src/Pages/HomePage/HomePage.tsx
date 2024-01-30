@@ -10,9 +10,9 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme, Button } from 'antd';
-import { useAuth } from '../../Contexts/AuthContext';
 import { Outlet, useNavigate } from 'react-router';
 import { SelectEventHandler } from 'rc-menu/lib/interface';
+import { useAuth } from '../../Hooks/useAuth';
 
 const { Header, Content, Footer, Sider } = Layout;
 
