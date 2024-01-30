@@ -10,10 +10,12 @@
   }
 }
 
-html, body, #root, #root>div {
-  height: 100%
+html,
+body,
+#root,
+#root > div {
+  height: 100%;
 }
-
 
 @tailwind components;
 @tailwind utilities;

@@ -11,15 +11,18 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "login", element: <LoginPage /> },
-      { path: "", element: <PrivateRoute component= {<HomePage />}/>,
-    children: [
-      { path: "", element: <div>Warehouses</div> },
-      { path: "users", element: <div>Users</div> },
-      { path: "admin", element: <div>Admin</div> },
-      { path: "logs", element: <div>Logs</div> },
-    ]}
+      {
+        path: "",
+        element: <PrivateRoute component={<HomePage />} />,
+        children: [
+          { path: "", element: <div>Warehouses</div> },
+          { path: "users", element: <div>Users</div> },
+          { path: "admin", element: <div>Admin</div> },
+          { path: "logs", element: <div>Logs</div> },
+        ],
+      },
     ],
   },
 ]);
 
-export default router
+export default router;

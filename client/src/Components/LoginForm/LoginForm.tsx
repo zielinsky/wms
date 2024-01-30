@@ -2,14 +2,13 @@ import React from "react";
 import { TEInput, TERipple } from "tw-elements-react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAuth } from "../../Hooks/useAuth";
-import { useNavigate } from "react-router";
 
 type Inputs = {
   email: string;
   password: string;
 };
 
-export default function LoginPage(): JSX.Element {
+export default function LoginForm(): JSX.Element {
   const auth = useAuth();
   const {
     register,
@@ -19,7 +18,7 @@ export default function LoginPage(): JSX.Element {
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
-    auth.login(data.email, data.password);
+    auth.login(data.email, data.password)
   };
 
   // console.log(watch("email")) // watch input value by passing the name of it

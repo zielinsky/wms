@@ -1,15 +1,14 @@
 /** @type {import('tailwindcss').Config} */
-import type { Config } from 'tailwindcss'
+import type { Config } from "tailwindcss";
 export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/tw-elements-react/dist/js/**/*.js"
+    "./node_modules/tw-elements-react/dist/js/**/*.js",
   ],
   theme: {
     extend: {},
   },
   darkMode: "class",
-  plugins: [require("tw-elements-react/dist/plugin.cjs")]
-} satisfies Config
-
+  plugins: [require("tw-elements-react/dist/plugin.cjs")],
+} satisfies Config;
