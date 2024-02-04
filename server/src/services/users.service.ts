@@ -2,7 +2,7 @@
 import { User, userConverter } from "../models/users";
 import { db } from "../../firebase";
 
-export class userService {
+export class usersService {
   //get all posts
   async getUsers() {
     try {
@@ -21,4 +21,4 @@ export class userService {
 }
 
 //export the class
-export const userServices = new userService();
+export const usersServices = new usersService();
