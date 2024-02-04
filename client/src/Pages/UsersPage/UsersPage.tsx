@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { List } from "antd";
 import { useAppDispatch, useAppSelector } from "../../Store/App/hooks";
-import { fetchUsers } from "../../Store/Users/asynThunks";
+import { fetchUsers } from "../../Store/asyncThunks";
 import { selectStatus, selectUsers } from "../../Store/Users/userSlice";
 
 const UsersPage = () => {

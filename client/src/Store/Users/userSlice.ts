@@ -2,7 +2,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { createAppSlice } from "../App/createAppSlice";
 import type { AppThunk } from "../App/store";
 import User from "../../Interfaces/User/user";
-import { fetchUsers } from "./asynThunks";
+import { fetchUsers } from "../asyncThunks";
 
 export interface UsersSliceState {
   users: Array<User>;
