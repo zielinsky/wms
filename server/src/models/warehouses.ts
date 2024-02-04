@@ -1,6 +1,6 @@
 import { QueryDocumentSnapshot, DocumentData } from "firebase-admin/firestore";
 
-class Warehouse {
+export class Warehouse {
   id: string;
   name: string;
 

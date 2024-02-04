@@ -1,6 +1,6 @@
 import { QueryDocumentSnapshot, DocumentData } from "firebase-admin/firestore";
 
-class User {
+export class User {
   name: string;
   email: string;
   uid: string;
@@ -12,7 +12,7 @@ class User {
   }
 }
 
-const userConverter = {
+export const userConverter = {
   toFirestore: (user: User) => {
     return {
       name: user.name,
