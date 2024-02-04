@@ -1,5 +1,5 @@
 import express, { Express, Request, Response } from "express";
-import { UserController } from "./controllers/user.controller";
+import UserRoutes from "./routers/users.router";
 
 export const app: Express = express();
 const port = 3000;
@@ -12,4 +12,4 @@ app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });
 
-app.get("/api/users", UserController.getUsers);
+app.use("/api/users", UserRoutes.router);

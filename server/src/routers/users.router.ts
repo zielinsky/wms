@@ -1,5 +1,10 @@
 //importing modules
-import express from "express";
-import { app } from "../index";
+import { Router } from "express";
+import { UserController } from "../controllers/user.controller";
 
-//get posts
+const router = Router();
+
+//get users
+router.get("/", UserController.getUsers);
+
+export default { router };
