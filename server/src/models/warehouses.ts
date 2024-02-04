@@ -18,7 +18,7 @@ export const warehouseConverter = {
   },
   fromFirestore: (snapshot: QueryDocumentSnapshot<DocumentData>) => {
     const data = snapshot.data();
-    if (data) return new Warehouse(data.id, data.name);
+    if (data) return new Warehouse(snapshot.id, data.name);
     else throw new Error("Unable to read snapshot from firestore");
   },
 };

@@ -1,6 +1,7 @@
 import UserRoutes from "./routers/users.router";
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
+import warehousesRouter from "./routers/warehouses.router";
 
 export const app: Express = express();
 const port = 3000;
@@ -16,3 +17,4 @@ app.listen(port, () => {
 });
 
 app.use("/api/users", UserRoutes.router);
+app.use("/api/warehouses", warehousesRouter.router);

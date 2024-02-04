@@ -3,7 +3,6 @@ import { User, userConverter } from "../models/users";
 import { db } from "../../firebase";
 
 export class usersService {
-  //get all posts
   async getUsers() {
     try {
       const usersRef = db.collection("users");
