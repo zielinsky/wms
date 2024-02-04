@@ -1,11 +1,12 @@
-import UserRoutes from "./routers/users.router";
-import express, { Express, Request, Response } from "express";
 import cors from "cors";
+import express, { Express, Request, Response } from "express";
+import UserRoutes from "./routers/users.router";
 import warehousesRouter from "./routers/warehouses.router";
 
 export const app: Express = express();
 const port = 3000;
 
+app.use(express.json());
 app.use(cors({ origin: "*" }));
 
 app.get("/", (req: Request, res: Response) => {

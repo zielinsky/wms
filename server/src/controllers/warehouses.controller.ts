@@ -19,6 +19,18 @@ class warehousesController {
       await warehouseServices.getWarehousesWithItems();
     res.send(warehousesWithItems);
   };
+
+  updateWarehouseItemAmmount = async (req: Request, res: Response) => {
+    const warehouseId = req.params.id;
+    const itemId = req.body.itemId;
+    const amount = Number(req.body.amount);
+    await warehouseServices.updateWarehouseItemAmmount(
+      warehouseId,
+      itemId,
+      amount
+    );
+    res.send();
+  };
 }
 
 //export class

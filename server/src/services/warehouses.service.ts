@@ -58,6 +58,19 @@ export class warehouseService {
       console.log(error);
     }
   }
+
+  async updateWarehouseItemAmmount(
+    warehouseId: string,
+    itemId: string,
+    amount: number
+  ) {
+    const itemRef = db
+      .collection("warehouses/" + warehouseId + "/items")
+      .doc(itemId);
+    await itemRef.update({
+      amount: amount,
+    });
+  }
 }
 
 //export the class
