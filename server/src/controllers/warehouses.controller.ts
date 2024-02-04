@@ -13,6 +13,12 @@ class warehousesController {
     const warehouseItems = await warehouseServices.getWarehouseItems(id);
     res.send(warehouseItems);
   };
+
+  getWarehouseWithItems = async (req: Request, res: Response) => {
+    const warehousesWithItems =
+      await warehouseServices.getWarehousesWithItems();
+    res.send(warehousesWithItems);
+  };
 }
 
 //export class

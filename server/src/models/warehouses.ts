@@ -3,10 +3,12 @@ import { QueryDocumentSnapshot, DocumentData } from "firebase-admin/firestore";
 export class Warehouse {
   id: string;
   name: string;
+  items?: Array<WarehouseItem>;
 
-  constructor(id: string, name: string) {
+  constructor(id: string, name: string, items?: Array<WarehouseItem>) {
     this.id = id;
     this.name = name;
+    this.items = items;
   }
 }
 
@@ -26,6 +28,7 @@ export const warehouseConverter = {
   toFirestore: (warehouse: Warehouse) => {
     return {
       name: warehouse.name,
+      items: warehouse.items,
     };
   },
   fromFirestore: (snapshot: QueryDocumentSnapshot<DocumentData>) => {
