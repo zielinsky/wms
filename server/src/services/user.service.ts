@@ -7,8 +7,8 @@ export class userService {
   async getUsers() {
     try {
       const usersRef = db.collection("users");
-      let users: User[] = [];
-      usersRef.get().then((snapshot) => {
+      let users: User[] = new Array();
+      await usersRef.get().then((snapshot) => {
         snapshot.forEach((doc) => {
           users.push(userConverter.fromFirestore(doc));
         });

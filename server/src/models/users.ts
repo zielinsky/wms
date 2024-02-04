@@ -22,7 +22,7 @@ export const userConverter = {
   },
   fromFirestore: (snapshot: QueryDocumentSnapshot<DocumentData>) => {
     const data = snapshot.data();
-    if (data) return new User(data.name, data.state, data.country);
+    if (data) return new User(data.name, data.email, snapshot.id);
     else throw new Error("Unable to read snapshot from firestore");
   },
 };
