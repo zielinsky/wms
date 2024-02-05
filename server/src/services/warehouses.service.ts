@@ -58,6 +58,19 @@ export class warehouseService {
     }
   }
 
+  async getWarehouseItem(warehouseId: string, itemId: string) {
+    try {
+      const itemRef = db
+        .collection("warehouses/" + warehouseId + "/items")
+        .doc(itemId);
+      const item = await itemRef.get();
+      return item.data();
+    } catch (error) {
+      console.log(error);
+      return undefined;
+    }
+  }
+
   async updateWarehouseItemAmount(
     warehouseId: string,
     itemId: string,

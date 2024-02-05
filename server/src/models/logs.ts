@@ -20,6 +20,7 @@ export class Log {
   userId: string;
   warehouseId: string;
   itemId: string;
+  itemName: string;
 
   constructor(
     id: string,
@@ -29,7 +30,8 @@ export class Log {
     currAmount: number,
     userId: string,
     warehouseId: string,
-    itemId: string
+    itemId: string,
+    itemName: string
   ) {
     this.id = id;
     this.timestamp = timestamp;
@@ -39,6 +41,7 @@ export class Log {
     this.userId = userId;
     this.warehouseId = warehouseId;
     this.itemId = itemId;
+    this.itemName = itemName;
   }
 }
 
@@ -52,6 +55,7 @@ export const logConverter = {
       userId: log.userId,
       warehouseId: log.warehouseId,
       itemId: log.itemId,
+      itemName: log.itemName,
     };
   },
   fromFirestore: (snapshot: QueryDocumentSnapshot<DocumentData>) => {
@@ -65,7 +69,8 @@ export const logConverter = {
         data.currAmount,
         data.userId,
         data.warehouseId,
-        data.itemId
+        data.itemId,
+        data.itemName
       );
     else throw new Error("Unable to read snapshot from firestore");
   },

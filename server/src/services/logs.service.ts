@@ -24,7 +24,8 @@ export class logService {
     currAmount: number,
     userId: string,
     warehouseId: string,
-    itemId: string
+    itemId: string,
+    itemName: string
   ) {
     try {
       const id = await db
@@ -39,7 +40,8 @@ export class logService {
               currAmount,
               userId,
               warehouseId,
-              itemId
+              itemId,
+              itemName
             )
           )
         );

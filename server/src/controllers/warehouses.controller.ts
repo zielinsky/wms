@@ -1,3 +1,4 @@
+import { it } from "node:test";
 import { ActionType } from "../models/logs";
 import { logServices } from "../services/logs.service";
 import { warehouseServices } from "../services/warehouses.service";
@@ -23,23 +24,28 @@ class warehousesController {
 
   updateWarehouseItemAmount = async (req: Request, res: Response) => {
     const warehouseId = req.params.id;
-    const itemId = req.body.itemId;
+    const itemId = req.params.itemId;
     const userId = req.body.userId;
-    const prevAmount = Number(req.body.prevAmount);
-    const currAmount = Number(req.body.currAmount);
+    const delta = Number(req.body.delta);
+    const item = await warehouseServices.getWarehouseItem(warehouseId, itemId);
+    if (item == undefined) {
+      res.status(404).send();
+      return;
+    }
     const ans = await warehouseServices.updateWarehouseItemAmount(
       warehouseId,
       itemId,
-      currAmount
+      item.amount + delta
     );
     if (ans == 1) {
       await logServices.addLog(
-        currAmount - prevAmount > 0 ? ActionType.PUT : ActionType.TAKE,
-        prevAmount,
-        currAmount,
+        delta > 0 ? ActionType.PUT : ActionType.TAKE,
+        item.amount,
+        item.amount + delta,
         userId,
         warehouseId,
-        itemId
+        itemId,
+        item.name
       );
       res.send();
     } else res.status(404).send();
@@ -47,21 +53,22 @@ class warehousesController {
 
   deleteWarehouseItem = async (req: Request, res: Response) => {
     const warehouseId = req.params.id;
-    const itemId = req.body.itemId;
+    const itemId = req.params.itemId;
     const userId = req.body.userId;
-    const prevAmount = Number(req.body.prevAmount);
+    const item = await warehouseServices.getWarehouseItem(warehouseId, itemId);
     const ans = await warehouseServices.deleteWarehouseItem(
       warehouseId,
       itemId
     );
-    if (ans == 1) {
+    if (ans == 1 && item !== undefined) {
       await logServices.addLog(
         ActionType.DELETE,
-        prevAmount,
+        item.amount,
         0,
         userId,
         warehouseId,
-        itemId
+        itemId,
+        item.name
       );
       res.send();
     } else res.status(404).send();
@@ -84,7 +91,8 @@ class warehousesController {
         amount,
         userId,
         warehouseId,
-        ans
+        ans,
+        name
       );
       res.send({ id: ans });
     } else res.status(500).send();
