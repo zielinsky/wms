@@ -1,10 +1,10 @@
-export interface Warehouse {
+export interface WarehouseI {
   id: string;
   name: string;
-  items?: Array<WarehouseItem>;
+  items?: Array<WarehouseItemI>;
 }
 
-export interface WarehouseItem {
+export interface WarehouseItemI {
   id: string;
   name: string;
   amount: number;

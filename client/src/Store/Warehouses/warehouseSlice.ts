@@ -2,11 +2,15 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { createAppSlice } from "../App/createAppSlice";
 import type { AppThunk } from "../App/store";
 import User from "../../Interfaces/User/user";
-import { Warehouse } from "../../Interfaces/Warehouse/warehouse";
-import { fetchWarehouses, fetchWarehousesWithItems } from "../asyncThunks";
+import { WarehouseI } from "../../Interfaces/Warehouse/warehouse";
+import {
+  fetchWarehouses,
+  fetchWarehousesWithItems,
+  updateWarehouseItemAmount,
+} from "../asyncThunks";
 
 export interface UsersSliceState {
-  warehouses: Array<Warehouse>;
+  warehouses: Array<WarehouseI>;
   status: "idle" | "loading" | "failed";
 }
 
@@ -26,7 +30,7 @@ export const warehousesSlice = createAppSlice({
       })
       .addCase(
         fetchWarehouses.fulfilled,
-        (state, action: PayloadAction<Array<Warehouse>>) => {
+        (state, action: PayloadAction<Array<WarehouseI>>) => {
           state.warehouses = action.payload;
           state.status = "idle";
         }
@@ -36,11 +40,21 @@ export const warehousesSlice = createAppSlice({
       })
       .addCase(
         fetchWarehousesWithItems.fulfilled,
-        (state, action: PayloadAction<Array<Warehouse>>) => {
+        (state, action: PayloadAction<Array<WarehouseI>>) => {
           state.warehouses = action.payload;
           state.status = "idle";
         }
-      );
+      )
+      .addCase(updateWarehouseItemAmount.pending, (state, _) => {
+        state.status = "loading";
+      })
+      .addCase(updateWarehouseItemAmount.fulfilled, (state, action) => {
+        state.status = "idle";
+        const idx = state.warehouses.findIndex(
+          (val, _) => val.id == action.payload.itemId
+        );
+        state.warehouses[idx] = state.warehouses[idx];
+      });
   },
 
   selectors: {

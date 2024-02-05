@@ -2,7 +2,6 @@ import React from "react";
 import { TEInput, TERipple } from "tw-elements-react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAuth } from "../../Hooks/useAuth";
-import { useNavigate } from "react-router";
 
 type Inputs = {
   email: string;
