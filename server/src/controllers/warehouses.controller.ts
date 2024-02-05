@@ -23,20 +23,26 @@ class warehousesController {
     const warehouseId = req.params.id;
     const itemId = req.body.itemId;
     const amount = Number(req.body.amount);
-    await warehouseServices.updateWarehouseItemAmmount(
+    const ans = await warehouseServices.updateWarehouseItemAmmount(
       warehouseId,
       itemId,
       amount
     );
-    res.send();
+    if (ans == 1) res.send();
+    else res.status(404).send();
   };
 
   addWarehouseItem = async (req: Request, res: Response) => {
     const warehouseId = req.params.id;
     const name = req.body.name;
     const amount = Number(req.body.amount);
-    await warehouseServices.addWarehouseItemAmmount(warehouseId, name, amount);
-    res.send();
+    const ans = await warehouseServices.addWarehouseItemAmmount(
+      warehouseId,
+      name,
+      amount
+    );
+    if (ans != "-1") res.send({ id: ans });
+    else res.status(500).send();
   };
 }
 

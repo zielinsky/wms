@@ -67,13 +67,13 @@ export class warehouseService {
       const itemRef = db
         .collection("warehouses/" + warehouseId + "/items")
         .doc(itemId);
-      let time = await itemRef.update({
+      await itemRef.update({
         amount: amount,
       });
-      return time;
+      return 1;
     } catch (error) {
       console.log(error);
-      return -1;
+      return 0;
     }
   }
 
