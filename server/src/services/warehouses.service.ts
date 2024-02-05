@@ -58,7 +58,7 @@ export class warehouseService {
     }
   }
 
-  async updateWarehouseItemAmmount(
+  async updateWarehouseItemAmount(
     warehouseId: string,
     itemId: string,
     amount: number
@@ -77,7 +77,7 @@ export class warehouseService {
     }
   }
 
-  async addWarehouseItemAmmount(
+  async addWarehouseItemAmount(
     warehouseId: string,
     name: string,
     amount: number

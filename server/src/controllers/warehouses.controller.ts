@@ -20,13 +20,13 @@ class warehousesController {
       await warehouseServices.getWarehousesWithItems();
     res.send(warehousesWithItems);
   };
-  updateWarehouseItemAmmount = async (req: Request, res: Response) => {
+  updateWarehouseItemAmount = async (req: Request, res: Response) => {
     const warehouseId = req.params.id;
     const itemId = req.body.itemId;
     const userId = req.body.userId;
     const prevAmount = Number(req.body.prevAmount);
     const currAmount = Number(req.body.currAmount);
-    const ans = await warehouseServices.updateWarehouseItemAmmount(
+    const ans = await warehouseServices.updateWarehouseItemAmount(
       warehouseId,
       itemId,
       currAmount
@@ -49,7 +49,7 @@ class warehousesController {
     const name = req.body.name;
     const userId = req.body.userId;
     const amount = Number(req.body.amount);
-    const ans = await warehouseServices.addWarehouseItemAmmount(
+    const ans = await warehouseServices.addWarehouseItemAmount(
       warehouseId,
       name,
       amount
