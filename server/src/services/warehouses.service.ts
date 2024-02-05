@@ -77,6 +77,19 @@ export class warehouseService {
     }
   }
 
+  async deleteWarehouseItem(warehouseId: string, itemId: string) {
+    try {
+      const itemRef = db
+        .collection("warehouses/" + warehouseId + "/items")
+        .doc(itemId);
+      await itemRef.delete();
+      return 1;
+    } catch (error) {
+      console.log(error);
+      return 0;
+    }
+  }
+
   async addWarehouseItemAmount(
     warehouseId: string,
     name: string,

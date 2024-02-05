@@ -20,6 +20,7 @@ class warehousesController {
       await warehouseServices.getWarehousesWithItems();
     res.send(warehousesWithItems);
   };
+
   updateWarehouseItemAmount = async (req: Request, res: Response) => {
     const warehouseId = req.params.id;
     const itemId = req.body.itemId;
@@ -36,6 +37,28 @@ class warehousesController {
         currAmount - prevAmount > 0 ? ActionType.PUT : ActionType.TAKE,
         prevAmount,
         currAmount,
+        userId,
+        warehouseId,
+        itemId
+      );
+      res.send();
+    } else res.status(404).send();
+  };
+
+  deleteWarehouseItem = async (req: Request, res: Response) => {
+    const warehouseId = req.params.id;
+    const itemId = req.body.itemId;
+    const userId = req.body.userId;
+    const prevAmount = Number(req.body.prevAmount);
+    const ans = await warehouseServices.deleteWarehouseItem(
+      warehouseId,
+      itemId
+    );
+    if (ans == 1) {
+      await logServices.addLog(
+        ActionType.DELETE,
+        prevAmount,
+        0,
         userId,
         warehouseId,
         itemId
