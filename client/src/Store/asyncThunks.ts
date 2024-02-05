@@ -91,3 +91,8 @@ export const deleteWarehouseItem = createAsyncThunk(
     return reqData;
   }
 );
+
+export const getAllLogs = createAsyncThunk("logs/getAllLogs", async () => {
+  const response = await client.get(`/api/logs/all`);
+  return response.data;
+});

@@ -6,6 +6,7 @@ import HomePage from "../Pages/HomePage/HomePage";
 import PrivateRoute from "./PrivateRoute";
 import UsersPage from "../Pages/UsersPage/UsersPage";
 import WarehousesPage from "../Pages/WarehousesPage/WarehousesPage";
+import LogsPage from "../Pages/LogsPage/LogsPage";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
           { path: "", element: <WarehousesPage /> },
           { path: "users", element: <UsersPage /> },
           { path: "admin", element: <div>Admin</div> },
-          { path: "logs", element: <div>Logs</div> },
+          { path: "logs", element: <LogsPage /> },
         ],
       },
     ],

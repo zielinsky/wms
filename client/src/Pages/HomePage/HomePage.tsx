@@ -37,6 +37,8 @@ const items: MenuItem[] = [
   getItem("Logs", "logs", <HistoryOutlined />, [
     getItem("Put", "logsPut"),
     getItem("Take", "logsTake"),
+    getItem("Add", "logsAdd"),
+    getItem("Delete", "logsDelete"),
     getItem("All", "logsAll"),
   ]),
   getItem("Admin", "admin", <UserOutlined />),
@@ -47,6 +49,8 @@ const keyToPathMap: { [key: string]: string } = {
   users: "/users",
   logsPut: "/logs?filter=put",
   logsTake: "/logs?filter=take",
+  logsAdd: "/logs?filter=add",
+  logsDelete: "/logs?filter=delete",
   logsAll: "/logs?filter=all",
   admin: "/admin",
 };
