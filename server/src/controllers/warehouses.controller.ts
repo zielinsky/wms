@@ -1,4 +1,3 @@
-//import modules
 import { warehouseServices } from "../services/warehouses.service";
 import { Request, Response } from "express";
 
@@ -29,6 +28,14 @@ class warehousesController {
       itemId,
       amount
     );
+    res.send();
+  };
+
+  addWarehouseItem = async (req: Request, res: Response) => {
+    const warehouseId = req.params.id;
+    const name = req.body.name;
+    const amount = Number(req.body.amount);
+    await warehouseServices.addWarehouseItemAmmount(warehouseId, name, amount);
     res.send();
   };
 }

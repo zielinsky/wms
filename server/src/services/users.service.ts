@@ -1,4 +1,3 @@
-//import module
 import { User, userConverter } from "../models/users";
 import { db } from "../../firebase";
 

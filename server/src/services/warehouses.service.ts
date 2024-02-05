@@ -1,4 +1,3 @@
-//import module
 import {
   Warehouse,
   WarehouseItem,
@@ -64,12 +63,38 @@ export class warehouseService {
     itemId: string,
     amount: number
   ) {
-    const itemRef = db
-      .collection("warehouses/" + warehouseId + "/items")
-      .doc(itemId);
-    await itemRef.update({
-      amount: amount,
-    });
+    try {
+      const itemRef = db
+        .collection("warehouses/" + warehouseId + "/items")
+        .doc(itemId);
+      let time = await itemRef.update({
+        amount: amount,
+      });
+      return time;
+    } catch (error) {
+      console.log(error);
+      return -1;
+    }
+  }
+
+  async addWarehouseItemAmmount(
+    warehouseId: string,
+    name: string,
+    amount: number
+  ) {
+    try {
+      let itemRef = await db
+        .collection("warehouses/" + warehouseId + "/items")
+        .add(
+          warehouseItemConverter.toFirestore(
+            new WarehouseItem("", name, amount)
+          )
+        );
+      return itemRef.id;
+    } catch (error) {
+      console.log(error);
+      return "-1";
+    }
   }
 }
 
