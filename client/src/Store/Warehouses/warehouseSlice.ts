@@ -10,6 +10,8 @@ import {
   WarehouseItemI,
 } from "../../Interfaces/Warehouse/warehouse";
 import {
+  addWarehouseItem,
+  deleteWarehouseItem,
   fetchWarehouses,
   fetchWarehousesWithItems,
   updateWarehouseItemAmount,
@@ -63,12 +65,41 @@ export const warehousesSlice = createAppSlice({
         items[idx] = {
           id: warehouseItem.id,
           name: warehouseItem.name,
-          amount: action.payload.amount,
+          amount: action.payload.currAmount + action.payload.delta,
         };
         warehouseAdapter.updateOne(state, {
           id: action.payload.warehouseId,
           changes: { items: items },
         });
+      })
+      .addCase(addWarehouseItem.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(addWarehouseItem.fulfilled, (state, action) => {
+        // warehouseAdapter.addOne(state, action.payload);
+        state.entities[action.payload.warehouseId].items!.push(
+          action.payload.warehouseItem
+        );
+        warehouseAdapter.updateOne(state, {
+          id: action.payload.warehouseId,
+          changes: { items: state.entities[action.payload.warehouseId].items! },
+        });
+        state.status = "idle";
+      })
+      .addCase(deleteWarehouseItem.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(deleteWarehouseItem.fulfilled, (state, action) => {
+        const items = state.entities[action.payload.warehouseId].items!;
+        items.splice(
+          items.findIndex((val) => val.id === action.payload.itemId),
+          1
+        );
+        warehouseAdapter.updateOne(state, {
+          id: action.payload.warehouseId,
+          changes: { items: items },
+        });
+        state.status = "idle";
       });
   },
 
@@ -76,8 +107,6 @@ export const warehousesSlice = createAppSlice({
     selectStatus: (state) => state.status,
   },
 });
-
-export const {} = warehousesSlice.actions;
 
 export const { selectAll: selectWarehouses } =
   warehouseAdapter.getSelectors<RootState>((state) => state.warehouses);

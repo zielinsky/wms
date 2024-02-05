@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { List, Card, Button } from "antd";
+import React, { useEffect } from "react";
+import { List } from "antd";
 import { useAppDispatch, useAppSelector } from "../../Store/App/hooks";
 import { fetchWarehousesWithItems } from "../../Store/asyncThunks";
 import { selectStatus } from "../../Store/Users/userSlice";
 import { selectWarehouses } from "../../Store/Warehouses/warehouseSlice";
-import WarehouseItem from "../../Components/WarehouseItem/WarehouseItem";
+import WarehouseCard from "../../Components/Warehouse/WarehouseCard";
 
 const WarehousesPage = () => {
   const dispatch = useAppDispatch();
@@ -21,15 +21,7 @@ const WarehousesPage = () => {
         dataSource={warehouses}
         renderItem={(warehouse, index) => (
           <List.Item>
-            <Card title={warehouse.name}>
-              <List
-                itemLayout="horizontal"
-                dataSource={warehouse.items}
-                renderItem={(warehouseItem, index) => (
-                  <WarehouseItem warehouseItem={warehouseItem} />
-                )}
-              />
-            </Card>
+            <WarehouseCard warehouse={warehouse} />
           </List.Item>
         )}
       />

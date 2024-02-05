@@ -2,20 +2,25 @@ import React, { useState } from "react";
 import { Modal } from "antd";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { TEInput } from "tw-elements-react";
+import { WarehouseItemI } from "../../Interfaces/Warehouse/warehouse";
 
-type Inputs = {
+type WarehouseItemModalFormInputs = {
+  amount: string;
+};
+
+export type WarehouseItemChangeModalInputs = {
   amount: number;
 };
 
 interface props {
-  onSubmit: (data: any) => Promise<void>;
+  onSubmit: (data: WarehouseItemChangeModalInputs) => Promise<void>;
   open: boolean;
   close: () => void;
   title: string;
   label: string;
 }
 
-const WarehouseItemModal = (props: props) => {
+const WarehouseItemChangeModal = (props: props) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
 
   const {
@@ -23,10 +28,11 @@ const WarehouseItemModal = (props: props) => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
-    await props.onSubmit(data);
+  } = useForm<WarehouseItemModalFormInputs>();
+  const onSubmit: SubmitHandler<WarehouseItemModalFormInputs> = async (
+    data
+  ) => {
+    await props.onSubmit({ amount: parseInt(data.amount) });
   };
 
   const handleOk = async () => {
@@ -37,7 +43,6 @@ const WarehouseItemModal = (props: props) => {
   };
 
   const handleCancel = () => {
-    console.log("Clicked cancel button");
     props.close();
   };
 
@@ -65,4 +70,4 @@ const WarehouseItemModal = (props: props) => {
   );
 };
 
-export default WarehouseItemModal;
+export default WarehouseItemChangeModal;
