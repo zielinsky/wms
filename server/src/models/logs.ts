@@ -2,12 +2,13 @@ import {
   QueryDocumentSnapshot,
   DocumentData,
   Timestamp,
-  DocumentReference,
 } from "firebase-admin/firestore";
 
 export enum ActionType {
   TAKE = "TAKE",
   PUT = "PUT",
+  ADD = "ADD",
+  DELETE = "DELETE",
 }
 
 export class Log {
@@ -16,9 +17,9 @@ export class Log {
   type: ActionType;
   prevAmount: number;
   currAmount: number;
-  userRef: DocumentReference;
-  warehouseRef: DocumentReference;
-  itemRef: DocumentReference;
+  userId: string;
+  warehouseId: string;
+  itemId: string;
 
   constructor(
     id: string,
@@ -26,18 +27,18 @@ export class Log {
     type: ActionType,
     prevAmount: number,
     currAmount: number,
-    userRef: DocumentReference,
-    warehouseRef: DocumentReference,
-    itemRef: DocumentReference
+    userId: string,
+    warehouseId: string,
+    itemId: string
   ) {
     this.id = id;
     this.timestamp = timestamp;
     this.type = type;
     this.prevAmount = prevAmount;
     this.currAmount = currAmount;
-    this.userRef = userRef;
-    this.warehouseRef = warehouseRef;
-    this.itemRef = itemRef;
+    this.userId = userId;
+    this.warehouseId = warehouseId;
+    this.itemId = itemId;
   }
 }
 
@@ -48,9 +49,9 @@ export const logConverter = {
       type: log.type,
       prevAmount: log.prevAmount,
       currAmount: log.currAmount,
-      userRef: log.userRef,
-      warehouseRef: log.warehouseRef,
-      itemRef: log.itemRef,
+      userId: log.userId,
+      warehouseId: log.warehouseId,
+      itemId: log.itemId,
     };
   },
   fromFirestore: (snapshot: QueryDocumentSnapshot<DocumentData>) => {
@@ -62,9 +63,9 @@ export const logConverter = {
         data.type,
         data.prevAmount,
         data.currAmount,
-        data.userRef,
-        data.warehouseRef,
-        data.itemRef
+        data.userId,
+        data.warehouseId,
+        data.itemId
       );
     else throw new Error("Unable to read snapshot from firestore");
   },
