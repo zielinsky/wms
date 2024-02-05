@@ -3,14 +3,18 @@ import { db } from "../../firebase";
 import { ActionType, Log, logConverter } from "../models/logs";
 
 export class logService {
-  async getLogs() {
+  async getLogs(type?: ActionType) {
     try {
-      const logsRef = db.collection("logs");
+      let logsRef;
+      if (type != undefined) {
+        logsRef = db.collection("logs").where("type", "==", type);
+      } else {
+        logsRef = db.collection("logs");
+      }
       let logs: Log[] = [];
-      await logsRef.get().then((snapshot) => {
-        snapshot.forEach((doc) => {
-          logs.push(logConverter.fromFirestore(doc));
-        });
+      const snapshot = await logsRef.get();
+      snapshot.forEach((doc) => {
+        logs.push(logConverter.fromFirestore(doc));
       });
       return logs;
     } catch (error) {
@@ -34,7 +38,7 @@ export class logService {
           logConverter.toFirestore(
             new Log(
               "",
-              Timestamp.fromDate(new Date()),
+              new Date(),
               type,
               prevAmount,
               currAmount,

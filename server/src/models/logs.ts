@@ -13,7 +13,7 @@ export enum ActionType {
 
 export class Log {
   id: string;
-  timestamp: Timestamp;
+  date: Date;
   type: ActionType;
   prevAmount: number;
   currAmount: number;
@@ -24,7 +24,7 @@ export class Log {
 
   constructor(
     id: string,
-    timestamp: Timestamp,
+    date: Date,
     type: ActionType,
     prevAmount: number,
     currAmount: number,
@@ -34,7 +34,7 @@ export class Log {
     itemName: string
   ) {
     this.id = id;
-    this.timestamp = timestamp;
+    this.date = date;
     this.type = type;
     this.prevAmount = prevAmount;
     this.currAmount = currAmount;
@@ -48,7 +48,7 @@ export class Log {
 export const logConverter = {
   toFirestore: (log: Log) => {
     return {
-      timestamp: log.timestamp,
+      timestamp: Timestamp.fromDate(log.date),
       type: log.type,
       prevAmount: log.prevAmount,
       currAmount: log.currAmount,
@@ -63,7 +63,7 @@ export const logConverter = {
     if (data)
       return new Log(
         snapshot.id,
-        data.date,
+        data.timestamp.toDate(),
         data.type,
         data.prevAmount,
         data.currAmount,

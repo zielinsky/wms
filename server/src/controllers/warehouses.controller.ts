@@ -1,4 +1,3 @@
-import { it } from "node:test";
 import { ActionType } from "../models/logs";
 import { logServices } from "../services/logs.service";
 import { warehouseServices } from "../services/warehouses.service";
