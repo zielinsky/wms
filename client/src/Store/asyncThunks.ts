@@ -32,7 +32,7 @@ export const updateWarehouseItemAmount = createAsyncThunk(
   "warehouses/updateWarehouseItemAmount",
   async (reqData: updateWarehouseItemAmountReq) => {
     const { warehouseId, itemId, amount } = reqData;
-    const response = await client.put(`/api/warehouses/${warehouseId}/amount`, {
+    const response = await client.put(`/api/warehouses/${warehouseId}/items`, {
       itemId,
       amount,
     });

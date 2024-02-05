@@ -1,23 +1,29 @@
-import type { PayloadAction } from "@reduxjs/toolkit";
+import {
+  createEntityAdapter,
+  Draft,
+  type PayloadAction,
+} from "@reduxjs/toolkit";
 import { createAppSlice } from "../App/createAppSlice";
-import type { AppThunk } from "../App/store";
-import User from "../../Interfaces/User/user";
-import { WarehouseI } from "../../Interfaces/Warehouse/warehouse";
+import { RootState, type AppThunk } from "../App/store";
+import {
+  WarehouseI,
+  WarehouseItemI,
+} from "../../Interfaces/Warehouse/warehouse";
 import {
   fetchWarehouses,
   fetchWarehousesWithItems,
   updateWarehouseItemAmount,
 } from "../asyncThunks";
 
-export interface UsersSliceState {
-  warehouses: Array<WarehouseI>;
+const warehouseAdapter = createEntityAdapter<WarehouseI>();
+interface warehouseSlicePartialState {
   status: "idle" | "loading" | "failed";
 }
 
-const initialState: UsersSliceState = {
-  warehouses: [],
-  status: "idle",
-};
+const initialState =
+  warehouseAdapter.getInitialState<warehouseSlicePartialState>({
+    status: "idle",
+  });
 
 export const warehousesSlice = createAppSlice({
   name: "warehouses",
@@ -31,7 +37,7 @@ export const warehousesSlice = createAppSlice({
       .addCase(
         fetchWarehouses.fulfilled,
         (state, action: PayloadAction<Array<WarehouseI>>) => {
-          state.warehouses = action.payload;
+          warehouseAdapter.addMany(state, action.payload);
           state.status = "idle";
         }
       )
@@ -41,7 +47,7 @@ export const warehousesSlice = createAppSlice({
       .addCase(
         fetchWarehousesWithItems.fulfilled,
         (state, action: PayloadAction<Array<WarehouseI>>) => {
-          state.warehouses = action.payload;
+          warehouseAdapter.addMany(state, action.payload);
           state.status = "idle";
         }
       )
@@ -50,19 +56,30 @@ export const warehousesSlice = createAppSlice({
       })
       .addCase(updateWarehouseItemAmount.fulfilled, (state, action) => {
         state.status = "idle";
-        const idx = state.warehouses.findIndex(
-          (val, _) => val.id == action.payload.itemId
-        );
-        state.warehouses[idx] = state.warehouses[idx];
+        const items: Draft<WarehouseItemI>[] | undefined =
+          state.entities[action.payload.warehouseId].items!;
+        const idx = items!.findIndex((val) => val.id === action.payload.itemId);
+        const warehouseItem = items[idx];
+        items[idx] = {
+          id: warehouseItem.id,
+          name: warehouseItem.name,
+          amount: action.payload.amount,
+        };
+        warehouseAdapter.updateOne(state, {
+          id: action.payload.warehouseId,
+          changes: { items: items },
+        });
       });
   },
 
   selectors: {
-    selectWarehouses: (state) => state.warehouses,
     selectStatus: (state) => state.status,
   },
 });
 
 export const {} = warehousesSlice.actions;
 
-export const { selectWarehouses, selectStatus } = warehousesSlice.selectors;
+export const { selectAll: selectWarehouses } =
+  warehouseAdapter.getSelectors<RootState>((state) => state.warehouses);
+
+export const { selectStatus } = warehousesSlice.selectors;
